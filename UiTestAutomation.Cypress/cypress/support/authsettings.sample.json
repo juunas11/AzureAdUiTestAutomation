@@ -1,0 +1,8 @@
+{
+  "authority": "https://login.microsoftonline.com/your-aad-tenant-id",
+  "clientId": "app-client-id",
+  "clientSecret": "app-client-secret",
+  "apiScopes": ["api://api-client-id/Data.Read"],
+  "username": "user@yourcompany.onmicrosoft.com",
+  "password": "password"
+}
