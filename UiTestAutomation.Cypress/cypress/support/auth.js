@@ -111,10 +111,12 @@ const injectTokens = (tokenResponse) => {
   localStorage.setItem(accessTokenKey, JSON.stringify(accessTokenEntity));
 };
 
-export const login = () => {
-  return cy
-    .visit("/")
-    .request({
+export const login = (cachedTokenResponse) => {
+  let tokenResponse = null;
+  let chainable = cy.visit("/");
+
+  if (!cachedTokenResponse) {
+    chainable = chainable.request({
       url: authority + "/oauth2/v2.0/token",
       method: "POST",
       body: {
@@ -126,9 +128,24 @@ export const login = () => {
         password: password,
       },
       form: true,
-    })
+    });
+  } else {
+    chainable = chainable.then(() => {
+      return {
+        body: cachedTokenResponse,
+      };
+    });
+  }
+
+  chainable
     .then((response) => {
       injectTokens(response.body);
+      tokenResponse = response.body;
     })
-    .reload();
+    .reload()
+    .then(() => {
+      return tokenResponse;
+    });
+
+  return chainable;
 };
