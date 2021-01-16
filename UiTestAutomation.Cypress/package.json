@@ -11,7 +11,7 @@
   "author": "Joonas Westlin",
   "license": "MIT",
   "dependencies": {
-    "cypress": "^4.12.1",
+    "cypress": "^6.2.1",
     "jsonwebtoken": "^8.5.1"
   }
 }
